@@ -4,7 +4,7 @@
 
 ### Objective
 
-* 
+* To manipulate an SVG using ES6 JavaScript and make an interactive baseball quiz.
 
 ### Scope
 
