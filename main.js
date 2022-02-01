@@ -8,7 +8,6 @@ header.textContent = helloWorld;
 
 var myButton = document.querySelector("button");
 myButton.onclick = () => {
-    // alert("Lets begin!");
     beginQuiz();
     addCircleEvents();
 }
@@ -21,7 +20,7 @@ function beginQuiz(){
     return quizQuestions.textContent;
 }
 
-function addCircleEvents(questionText){
+function addCircleEvents(){
     var circleList = document.querySelectorAll("circle");
     circleList.forEach((circle)=>{
         circle.setAttribute("onclick", "checkAnswer()");
@@ -32,9 +31,15 @@ function getQuizQuestion(){
     return document.querySelector("p").textContent;
 }
 
+function compareInput(answersArray){
+    return answersArray.find(answer => answer == getQuizQuestion());
+}
+
 function checkAnswer(){
-    var valueElement = document.querySelector("#positions");
-    
-    console.log(getQuizQuestion(), typeof(valueElement.CDATA_SECTION_NODE));
-    
+    var positionTags = [...document.querySelector("#positions").children];
+    var arrayAnswers = [];
+    positionTags.forEach((tag)=>{
+        arrayAnswers.push(tag.textContent.replace(/ {4}|[\t\n\r]/gm,""));
+    })
+    console.log(compareInput(arrayAnswers));
 }
