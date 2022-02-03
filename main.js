@@ -1,10 +1,11 @@
 // Global variables
 var positions = ['Catcher', 'Pitcher', 'First Base', 'Second Base',  'Third Base', 'Shortstop', 'Right Field', 'Center Field', 'Left Field'];
 var scoreArray = [];
+const projectState = 'dev';
 
 // Document elements
 var header = document.getElementById("homeHeader");
-header.textContent = "Baseball Game";
+header.textContent = "Baseball Quiz";
 
 var myButton = document.querySelectorAll("button")[0];
 myButton.onclick = () => {
@@ -18,6 +19,16 @@ myButton.onclick = () => {
 
 window.onload = ()=>{
     shuffle(positions);
+    checkState();
+}
+
+function checkState(){
+    let projectText = [...document.querySelector("#positions").children];
+    projectText.map((base)=>{
+        if (projectState === 'production'){
+            base.lastElementChild.innerHTML = '';
+        }
+    });
 }
 
 // Funtionality 
@@ -37,12 +48,6 @@ function submitAnswer(clickedPosition, globalId){
         }, 500);
         notifyUser("Try again!");
     }
-}
-
-function notifyUser(message){
-    let element = document.querySelector("#notify");
-    element.textContent = '';
-    element.textContent = message;
 }
 
 function shuffle(array) {
@@ -65,14 +70,19 @@ function changeColor(tag, color){
 function askPosition(){
     var quizQuestions = document.querySelector("#questionPrompt");
     quizQuestions.textContent = positions[positions.length-1];
+    notifyUser('');
     return quizQuestions.textContent;
+}
+
+function notifyUser(message){
+    let element = document.querySelector("#notify");
+    element.textContent = '';
+    element.textContent = message;
 }
 
 function finishedMessage(){
     let element = document.querySelector('#questionPrompt');
-    let element1 = document.querySelector('#notify');
     element.textContent = '';
-    element1.textContent = '';
     element.textContent = 'You Finished!'
 }
 
@@ -80,7 +90,9 @@ function removePosition(position){
     var positionIndex = positions.indexOf(position);
     positions.splice(positionIndex);
     if (positions.length === 0){
+        notifyUser('');
         finishedMessage();
+        
     }
 }
 
@@ -102,6 +114,6 @@ function getQuizQuestion(){
 
 // By Tomorrow: 
 
-// Refactored my addEventListener() to onclick setAttribute() added to each base in the SVG. DONE
+// Refactored my addEventListener() to onclick setAttribute added to each base in the SVG. DONE
 // Added a shuffle funtionality that initialy randomly changes the state of my position array. DONE
 // Added the color change for correct and incorrect.
