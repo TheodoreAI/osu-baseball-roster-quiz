@@ -1,19 +1,25 @@
 var positions = ['Catcher', 'Pitcher', 'First Base', 'Second Base',  'Third Base', 'Shortstop', 'Right Field', 'Center Field', 'Left Field'];
-var answers = {
-                'question1': true, 
-                'question2': true, 
-                'question3': true, 
-                'question4': true, 
-                'question5': true, 
-                'question6': true,
-                'question7': true,
-                'question8': true,
-                'question9': true,
-            }
+
+var answersMap = new Map();
+
+var answersCorrect = [];
+
 
 // Begins the process
-window.onload = () => {
-    addCircleEvents();
+function submitAnswer(clickedPosition, globalId){
+    let tag = document.getElementById(globalId).childNodes[1];
+    if (clickedPosition === getQuizQuestion()){
+        changeColor(tag, 'green');
+        askPosition();
+        removePosition(getQuizQuestion());
+        numberOfCorrectAnswers('score', 'Correct');
+        console.log(answersMap.get('score'));
+    }else{
+        changeColor(tag, 'red');
+        askPosition();
+        removePosition(getQuizQuestion());
+        numberOfCorrectAnswers('Score', 'Wrong');
+    }
 }
 
 // Button Section
@@ -23,7 +29,6 @@ header.textContent = "Baseball Game";
 var myButton = document.querySelectorAll("button")[0];
 myButton.onclick = () => {
     askPosition();
-    addCircleEvents();
 }
 
 var myButton = document.querySelectorAll("button")[1];
@@ -31,27 +36,19 @@ myButton.onclick = () => {
     window.location.reload();
 }
 
+function changeColor(tag, color){
+    tag.style.fill = `${color}`;
+}
 
-// Function Section
 function askPosition(){
     var quizQuestions = document.querySelector("p");
     quizQuestions.textContent = positions[positions.length-1];
     return quizQuestions.textContent;
 }
 
-function countAnswers(color, index){
-    if (color == 'red'){
-        console.log(index, "red");
-        
-    }else if (color == 'green'){
-        console.log(index, "green");
-        
-    }
-}
+function giveScore(){
+    document.querySelector('#score').textContent = answersMap.get('');
 
-function changeColor(tag, color, index){
-    countAnswers(color, index);
-    tag.firstElementChild.style.fill = `${color}`;
 }
 
 function removePosition(position){
@@ -59,54 +56,25 @@ function removePosition(position){
     positions.splice(positionIndex);
     console.log(positions);
     if (positions.length === 0){
-        alert("You won!");
+        alert("You Finished!");
+        giveScore();
     }
 }
 
-function addCircleEvents(){
-    var positionTags = [...document.querySelector("#positions").children];
-    for (let tag = 0; tag < positionTags.length; tag++){
-        positionTags[tag].addEventListener("click", function(){
-            if (positionTags[tag].textContent.replace(/ {4}|[\t\n\r]/gm,"").includes(getQuizQuestion())){
-                alert(getQuizQuestion());
-                changeColor(positionTags[tag], 'green', tag);
-                askPosition();
-                removePosition(getQuizQuestion());
-                
-            }else{
-                changeColor(positionTags[tag], 'red', tag);
-                askPosition();
-                removePosition(getQuizQuestion());
-            }
-        })
-    }
+function numberOfCorrectAnswers(key, value){
+    answersMap.set(key, value);
 }
 
 function getQuizQuestion(){
     return document.querySelector("p").textContent;
 }
 
-function compareInput(answersArray){
-    return answersArray.find(answer => answer.includes(getQuizQuestion()));
-}
+// Add the shuffle, see the elements, reset the colors when asking for positions. 
+// Add the text that says if its incorreect
 
-function checkAnswer(){
-    var positionTags = [...document.querySelector("#positions").children];
-    var arrayAnswers = [];
-    positionTags.forEach((tag)=>{
-        arrayAnswers.push(tag.textContent.replace(/ {4}|[\t\n\r]/gm,""));
-    })
-    for (let tag = 0; tag < positionTags.length; tag++){
-        positionTags[tag].addEventListener("click", function(){
-            console.log("You clicked", positionTags[tag].textContent.replace(/ {4}|[\t\n\r]/gm,""));
-            if (positionTags[tag].textContent.replace(/ {4}|[\t\n\r]/gm,"").includes(getQuizQuestion())){
-                alert("You are right!");
-                return;
-            }else{
-                alert('Try again!');
-                return;
-            }
-              
-        })
-    }
-}
+
+// Apply a visibility variable to switch the text being visable or not (production vs. Dev)
+
+// Low Priority: shake the svg circle
+
+// Tomorrow: shuffle and the grey, correct and incorrect. 
