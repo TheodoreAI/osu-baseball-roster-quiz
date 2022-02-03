@@ -1,0 +1,13 @@
+{
+  "name": "baseball-quiz",
+  "version": "1.0.0",
+  "description": "Creates a baseball quiz.",
+  "main": "main.js",
+  "repository": "https://github.com/TheodoreAI/osu-baseball-roster-quiz.git",
+  "author": "Mateo Estrada Jorge",
+  "license": "MIT",
+  "scripts": {"test":"jest"},
+  "type": "module"
+  
+}
+

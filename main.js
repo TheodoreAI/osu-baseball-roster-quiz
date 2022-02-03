@@ -13,7 +13,6 @@ var answers = {
 
 // Begins the process
 window.onload = () => {
-    askPosition();
     addCircleEvents();
 }
 
@@ -46,16 +45,13 @@ function askPosition(){
     return quizQuestions.textContent;
 }
 
-function setAnswer(bool){
-    
-}
 function countAnswers(color, index){
     if (color == 'red'){
-        console.log(index);
-        setAnswer(false);
+        console.log(index, "red");
+        
     }else if (color == 'green'){
-        console.log(index);
-        setAnswer(true);
+        console.log(index, "green");
+        
     }
 }
 
@@ -65,22 +61,28 @@ function changeColor(tag, color, index){
 }
 
 function removePosition(position){
-    positions;
+    var positionIndex = positions.indexOf(position);
+    positions.splice(positionIndex);
+    console.log(positions);
+    if (positions.length === 0){
+        alert("You won!");
+    }
 }
 
 function addCircleEvents(){
     var positionTags = [...document.querySelector("#positions").children];
     for (let tag = 0; tag < positionTags.length; tag++){
         positionTags[tag].addEventListener("click", function(){
-            console.log("You clicked", positionTags[tag].textContent.replace(/ {4}|[\t\n\r]/gm,""));
             if (positionTags[tag].textContent.replace(/ {4}|[\t\n\r]/gm,"").includes(getQuizQuestion())){
+                alert(getQuizQuestion());
                 changeColor(positionTags[tag], 'green', tag);
-                removePosition(getQuizQuestion());
                 askPosition();
-            }else{
                 removePosition(getQuizQuestion());
+                
+            }else{
                 changeColor(positionTags[tag], 'red', tag);
                 askPosition();
+                removePosition(getQuizQuestion());
             }
         })
     }
