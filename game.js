@@ -1,6 +1,3 @@
-
-
-
 class Base{
     constructor(baseName){
         this.baseName = baseName;
@@ -129,16 +126,18 @@ function listeningToBases(bases, currentValue){
             console.log(`You are correct! ${clickedPosition}`, currentValue);
             baseObject.baseSelected = true;
             baseObject.baseColor = 'green';
+            console.log(bases);
             }
         else
             {
-            alert(`Try again! ${clickedPosition}`);
+            console.log(`Try again ${clickedPosition}`, currentValue);
             baseObject.baseSelected = true;
             baseObject.baseColor = 'red';
-
+            console.log(bases);
             }
         })
     })
+    
     
 }
 
@@ -148,7 +147,7 @@ window.onload = () => {
     let baseballQuiz = new BaseballField();
     // baseballQuiz.circleEvents();
 
-    // Add the bases to the baseballQuiz
+    // Add the bases to the gameState
     bases.forEach((base)=>{
         baseballQuiz.baseballBases = new Base(base);
     })
@@ -159,12 +158,11 @@ window.onload = () => {
 
     // I need to feed the baseballfield and the bases to my gamestate.
     // Set the game state value
-    console.log(baseballQuiz.allBaseballBases);
-    listeningToBases(baseballQuiz.allBaseballBases, document.querySelector("p").textContent);
-    console.log(baseballQuiz.allBaseballBases);
     
-    // If one of the bases is clicked
+    listeningToBases(baseballQuiz.allBaseballBases, document.querySelector("p").textContent);
 }
+
+
 
 
 module.exports = BaseballQuiz;

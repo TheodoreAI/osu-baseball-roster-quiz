@@ -32,16 +32,10 @@ myButton.onclick = () => {
 }
 
 
-function getRandomNumber(min, max) {
-    let totalEle = max - min + 1;
-    let result = Math.floor(Math.random() * totalEle) + min;
-    return result;
-}
-
 // Function Section
 function askPosition(){
     var quizQuestions = document.querySelector("p");
-    quizQuestions.textContent = positions[getRandomNumber(0, positions.length)];
+    quizQuestions.textContent = positions[positions.length-1];
     return quizQuestions.textContent;
 }
 
