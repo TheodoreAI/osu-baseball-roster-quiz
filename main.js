@@ -15,7 +15,7 @@ window.onload = ()=>{
 }
 
 function startQuiz(){
-    //unhidestuff
+    //hidestuff
     document.querySelector("#quizControls").hidden = false;
     document.querySelector("#startQuizBtn").hidden = true;
     document.querySelector("#quizSvg").style.display = "block";
@@ -90,13 +90,15 @@ function shuffle(array) {
   }
 
 function getCircleTag(){
-    console.log(document.querySelector('circle'));
-    return document.querySelector('circle');
+    return [...document.querySelectorAll('circle')];
 }
 
 function askQuestion(){
-    let tag = getCircleTag();
-    changeColor(tag, 'grey');
+    getCircleTag().map((circle)=>{
+        if (circle.style.fill === 'green') {
+            circle.style.fill = 'grey';
+            }
+    })
     let quizQuestions = document.querySelector("#questionPrompt");
     quizQuestions.textContent = positions[positions.length-1];
     return quizQuestions.textContent;
@@ -107,7 +109,6 @@ function finishedMessage(){
     let h2 = document.createElement("h2")
     h2.textContent = 'You Finished!';
     element.appendChild(h2);
-    console.log(element);
 }
 
 // Add the shuffle, see the elements, reset the colors when asking for positions. 
