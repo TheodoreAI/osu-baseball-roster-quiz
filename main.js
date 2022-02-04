@@ -1,34 +1,48 @@
 // Global variables
-var positions = ['Catcher', 'Pitcher', 'First Base', 'Second Base',  'Third Base', 'Shortstop', 'Right Field', 'Center Field', 'Left Field'];
-var scoreArray = [];
+let positions = ['Catcher', 'Pitcher', 'First Base', 'Second Base',  'Third Base', 'Shortstop', 'Right Field', 'Center Field', 'Left Field'];
+let scoreArray = [];
 const projectState = 'dev';
 
 // Document elements
-var header = document.getElementById("homeHeader");
+let header = document.getElementById("homeHeader");
 header.textContent = "Baseball Quiz";
 
-var myButton = document.querySelectorAll("button")[0];
+let myButton = document.querySelectorAll("button")[0];
 myButton.onclick = () => {
     askPosition();
 }
-
-var myButton = document.querySelectorAll("button")[1];
-myButton.onclick = () => {
-    window.location.reload();
-}
-
+// Begin the page state
 window.onload = ()=>{
+    // Shuffle around the items in the array
     shuffle(positions);
     checkState();
 }
 
 function checkState(){
+    // Checks if in production or development to hide/show baseball base text.
     let projectText = [...document.querySelector("#positions").children];
     projectText.map((base)=>{
         if (projectState === 'production'){
             base.lastElementChild.innerHTML = '';
         }
     });
+}
+
+function getQuizQuestion(){
+    // Get the value of the current question from the prompt.
+    return document.querySelector("#questionPrompt").textContent;
+}
+function changeColor(tag, color){
+    tag.style.fill = `${color}`;
+}
+function removePosition(position){
+    // Removes a position once it's selected correctly.
+    var positionIndex = positions.indexOf(position);
+    positions.splice(positionIndex);
+    if (positions.length === 0){
+        finishedMessage();
+        
+    }
 }
 
 // Funtionality 
@@ -63,10 +77,6 @@ function shuffle(array) {
     }
   }
 
-function changeColor(tag, color){
-    tag.style.fill = `${color}`;
-}
-
 function askPosition(){
     var quizQuestions = document.querySelector("#questionPrompt");
     quizQuestions.textContent = positions[positions.length-1];
@@ -86,34 +96,11 @@ function finishedMessage(){
     element.textContent = 'You Finished!'
 }
 
-function removePosition(position){
-    var positionIndex = positions.indexOf(position);
-    positions.splice(positionIndex);
-    if (positions.length === 0){
-        notifyUser('');
-        finishedMessage();
-        
-    }
-}
-
-function numberOfCorrectAnswers(value){
-    scoreArray.push(value);
-}
-
-function getQuizQuestion(){
-    return document.querySelector("#questionPrompt").textContent;
-}
-
 // Add the shuffle, see the elements, reset the colors when asking for positions. 
 // Add the text that says if its incorreect
-
-
 // Apply a visibility variable to switch the text being visable or not (production vs. Dev)
-
 // Low Priority: shake the svg circle
-
 // By Tomorrow: 
-
 // Refactored my addEventListener() to onclick setAttribute added to each base in the SVG. DONE
 // Added a shuffle funtionality that initialy randomly changes the state of my position array. DONE
-// Added the color change for correct and incorrect.
+// Added the color change for correct and incorrect. DONE
