@@ -1,7 +1,7 @@
 // Global variables
 let positions = ['Catcher', 'Pitcher', 'First Base', 'Second Base',  'Third Base', 'Shortstop', 'Right Field', 'Center Field', 'Left Field'];
 let scoreArray = [];
-const projectState = 'dev';
+const projectState = 'production';
 
 // Document elements
 let header = document.getElementById("homeHeader");
@@ -39,22 +39,29 @@ function removePosition(position){
     // Removes a position once it's selected correctly.
     var positionIndex = positions.indexOf(position);
     positions.splice(positionIndex);
+    console.log(positions.length===0);
     if (positions.length === 0){
         finishedMessage();
-        
     }
 }
 
-// Funtionality 
+function notifyUser(message){
+    // Let user know if they answered correct/incorrect
+    let notify = document.getElementById("notification");
+    notify.textContent = '';
+    notify.textContent = message;
+}
+
 function submitAnswer(clickedPosition, globalId){
     let tag = document.getElementById(globalId).childNodes[1];
     if (clickedPosition === getQuizQuestion()){
         changeColor(tag, 'green');
+        notifyUser('Correct!');
         setTimeout(() => {
             changeColor(tag, 'grey');
         }, 500);
         removePosition(clickedPosition);
-        notifyUser('Correct!')
+        askPosition();
     }else{
         changeColor(tag, 'red');
         setTimeout(() => {
@@ -80,20 +87,15 @@ function shuffle(array) {
 function askPosition(){
     var quizQuestions = document.querySelector("#questionPrompt");
     quizQuestions.textContent = positions[positions.length-1];
-    notifyUser('');
     return quizQuestions.textContent;
 }
 
-function notifyUser(message){
-    let element = document.querySelector("#notify");
-    element.textContent = '';
-    element.textContent = message;
-}
-
 function finishedMessage(){
-    let element = document.querySelector('#questionPrompt');
-    element.textContent = '';
-    element.textContent = 'You Finished!'
+    let element = document.querySelector('#promptSection');
+    let h2 = document.createElement("h2")
+    h2.textContent = 'You Finished!';
+    element.appendChild(h2);
+    console.log(element);
 }
 
 // Add the shuffle, see the elements, reset the colors when asking for positions. 
