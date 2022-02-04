@@ -107,7 +107,6 @@ function finishedMessage(){
     let h2 = document.createElement("h2")
     h2.textContent = 'You Finished!';
     element.appendChild(h2);
-    console.log(element);
 }
 
 // Add the shuffle, see the elements, reset the colors when asking for positions. 
