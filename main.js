@@ -1,30 +1,38 @@
 // Global variables
 let positions = ['Catcher', 'Pitcher', 'First Base', 'Second Base',  'Third Base', 'Shortstop', 'Right Field', 'Center Field', 'Left Field'];
 let scoreArray = [];
-const projectState = 'production';
+const production = false;
 
 // Document elements
 let header = document.getElementById("homeHeader");
 header.textContent = "Baseball Quiz";
 
-let myButton = document.querySelectorAll("button")[0];
-myButton.onclick = () => {
-    askPosition();
-}
 // Begin the page state
 window.onload = ()=>{
-    // Shuffle around the items in the array
-    shuffle(positions);
+    // Check the state of the project
     checkState();
+    shuffle(positions);
+}
+
+function startQuiz(){
+    //unhidestuff
+    document.querySelector("#quizControls").hidden = false;
+    document.querySelector("#startQuizBtn").hidden = true;
+    document.querySelector("#quizSvg").style.display = "block";
+    document.querySelector("#instructions").hidden = false;
+    askQuestion();
+
 }
 
 function checkState(){
     // Checks if in production or development to hide/show baseball base text.
     let projectText = [...document.querySelector("#positions").children];
     projectText.map((base)=>{
-        if (projectState === 'production'){
+        if (production){
             base.lastElementChild.innerHTML = '';
+            document.querySelector("#quizSvg").style.display = "none";
         }
+ 
     });
 }
 
@@ -45,29 +53,26 @@ function removePosition(position){
     }
 }
 
-function notifyUser(message){
+function notifyUser(message,symbol){
     // Let user know if they answered correct/incorrect
     let notify = document.getElementById("notification");
-    notify.textContent = '';
-    notify.textContent = message;
+    notify.innerHTML = '';
+    notify.innerHTML =`${symbol} ${message}`;
+    
 }
 
 function submitAnswer(clickedPosition, globalId){
     let tag = document.getElementById(globalId).childNodes[1];
     if (clickedPosition === getQuizQuestion()){
         changeColor(tag, 'green');
-        notifyUser('Correct!');
-        setTimeout(() => {
-            changeColor(tag, 'grey');
-        }, 500);
+        notifyUser('Correct!', `<span>&#10003;</span>`);
         removePosition(clickedPosition);
-        askPosition();
     }else{
         changeColor(tag, 'red');
         setTimeout(() => {
             changeColor(tag, '#00a5ad')
-        }, 500);
-        notifyUser("Try again!");
+        }, 250);
+        notifyUser("Try again!", `<span>&#x2718;</span>`);
     }
 }
 
@@ -84,8 +89,15 @@ function shuffle(array) {
     }
   }
 
-function askPosition(){
-    var quizQuestions = document.querySelector("#questionPrompt");
+function getCircleTag(){
+    console.log(document.querySelector('circle'));
+    return document.querySelector('circle');
+}
+
+function askQuestion(){
+    let tag = getCircleTag();
+    changeColor(tag, 'grey');
+    let quizQuestions = document.querySelector("#questionPrompt");
     quizQuestions.textContent = positions[positions.length-1];
     return quizQuestions.textContent;
 }
