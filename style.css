@@ -4,3 +4,6 @@
 .base:active{
     cursor: grabbing;
 }
+.base:focus{
+    outline: black solid 2px;
+}
