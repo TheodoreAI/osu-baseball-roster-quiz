@@ -1,0 +1,6 @@
+.base{
+    cursor: grab;
+}
+.base:active{
+    cursor: grabbing;
+}
