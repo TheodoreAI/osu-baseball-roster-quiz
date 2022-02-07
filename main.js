@@ -1,7 +1,7 @@
 // Global variables
 let positions = ['Catcher', 'Pitcher', 'First Base', 'Second Base',  'Third Base', 'Shortstop', 'Right Field', 'Center Field', 'Left Field'];
 let scoreArray = [];
-const production = false;
+const production = true;
 
 // Document elements
 let header = document.getElementById("homeHeader");
@@ -59,6 +59,11 @@ function notifyUser(message,symbol){
     notify.innerHTML = '';
     notify.innerHTML =`${symbol} ${message}`;
     
+}
+
+// Handling keyboard strokes
+function selectCircle(circleId){
+    alert(circleId);
 }
 
 function submitAnswer(clickedPosition, globalId){

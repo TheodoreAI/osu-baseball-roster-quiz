@@ -2,5 +2,8 @@
     cursor: grab;
 }
 .base:active{
-    cursor: grabbing;
+    cursor: pointer;
+}
+.base:focus{
+    outline: black solid 2px;
 }
