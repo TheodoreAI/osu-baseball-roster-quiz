@@ -1,7 +1,7 @@
 // Global variables
 let positions = ['Catcher', 'Pitcher', 'First Base', 'Second Base',  'Third Base', 'Shortstop', 'Right Field', 'Center Field', 'Left Field'];
 let scoreArray = [];
-const production = false;
+const production = true;
 
 // Document elements
 let header = document.getElementById("homeHeader");
