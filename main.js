@@ -61,6 +61,11 @@ function notifyUser(message,symbol){
     
 }
 
+// Handling keyboard strokes
+function selectCircle(circleId){
+    alert(circleId);
+}
+
 function submitAnswer(clickedPosition, globalId){
     let tag = document.getElementById(globalId).childNodes[1];
     if (clickedPosition === getQuizQuestion()){
